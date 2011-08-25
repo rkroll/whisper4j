@@ -10,6 +10,7 @@ import org.github.whisper4j.Whisper;
 import org.github.whisper4j.Point;
 import org.github.whisper4j.TimeInfo;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestReadHeader {
@@ -28,6 +29,10 @@ public class TestReadHeader {
 	@Test
 	public void test_60_1440() throws Exception {
 		String testFile = getWhistperFile(getClass(), "60_1440.wsp");
+
+		Util.delete(testFile);
+		Util.create(testFile, "60:1440");
+
 		Whisper jisper = new Whisper();
 		Header header = jisper.info(testFile);
 		Assert.assertNotNull(header);
@@ -53,6 +58,9 @@ public class TestReadHeader {
 	@Test
 	public void test_12h_2y() throws Exception {
 		String testFile = getWhistperFile(getClass(), "12h_2y.wsp");
+		Util.delete(testFile);
+		Util.create(testFile, "12h:2y");
+		
 		Whisper jisper = new Whisper();
 		Header header = jisper.info(testFile);
 		Assert.assertNotNull(header);
@@ -79,6 +87,9 @@ public class TestReadHeader {
 	@Test
 	public void test_15m_8() throws Exception {
 		String testFile = getWhistperFile(getClass(), "15m_8.wsp");
+		Util.delete(testFile);
+		Util.create(testFile, "15m:8");
+
 
 		Whisper jisper = new Whisper();
 		Header header = jisper.info(testFile);
