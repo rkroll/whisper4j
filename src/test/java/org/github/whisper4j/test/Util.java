@@ -32,35 +32,43 @@ public class Util {
 		}
 	}
 
+	/**
+	 * Calls whisper-create.py with the given arguments
+	 * 
+	 * @param path
+	 * @param timePerPoint_timeToStore
+	 */
 	public synchronized static void create(String path,
 			String timePerPoint_timeToStore) {
 		path = path.replace('\\', '/');
-		String[] options = new String[] {
-				"./src/test/python/whisper-create.py", path,
-				timePerPoint_timeToStore };
 		try {
-
-//			File f = new File(path);
-//			PythonInterpreter python = new PythonInterpreter();
-//
-//			python.exec("import sys");
-//			python.exec("import os");
-//			// python.exec("os.chdir('src/test/python/')");
-//			python.exec("from whisper.py import whisper");
-//			// python.exec("import whisper.py");
-//			// python.execfile( "./src/test/python/whisper.py");
-//			// python.e("sys.argv = ['', 'my', 'args', 'here']");
-//			python.execfile(f.getAbsolutePath());
-//			// python.exec(options[0]+" "+options[1]+" "+options[2]);
-//			python.cleanup();
-			// System.out.println(options);
-			// jython.run(options);
-
-			// PySystemState.initialize();
-			jython.main(options);
-
-			// System.gc();
-			// jython.shutdownInterpreter();
+			PythonInterpreter python = new PythonInterpreter();
+			python.exec("import sys");
+			python.exec("sys.path.append(\"./src/test/python/\")");
+			python.exec("sys.argv = ['whisper-create.py', '" + path + "', '"
+					+ timePerPoint_timeToStore + "']");
+			python.execfile("./src/test/python/whisper-create.py");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Calls whisper-create.py with the given arguments
+	 * 
+	 * @param path
+	 * @param timePerPoint_timeToStore
+	 */
+	public synchronized static void update(String path,
+			String timePerPoint_timeToStore) {
+		path = path.replace('\\', '/');
+		try {
+			PythonInterpreter python = new PythonInterpreter();
+			python.exec("import sys");
+			python.exec("sys.path.append(\"./src/test/python/\")");
+			python.exec("sys.argv = ['whisper-update.py', '" + path + "', '"
+					+ timePerPoint_timeToStore + "']");
+			python.execfile("./src/test/python/whisper-update.py");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

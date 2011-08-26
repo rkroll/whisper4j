@@ -706,8 +706,8 @@ public class Whisper {
 			double value = buf.getDouble((i * pointsize) + 4);
 
 			if (timestamp == currentInterval) {
-				System.out.println(i + " " + currentInterval + " --- -" + i
-						+ " - " + timestamp + " , " + value);
+				//System.out.println(i + " " + currentInterval + " --- -" + i
+				//		+ " - " + timestamp + " , " + value);
 				// This is a timestamp
 				Point p = new Point();
 				p.timestamp = timestamp;
@@ -719,8 +719,8 @@ public class Whisper {
 //						+ " - " + timestamp + " , " + value);
 
 			} else {
-				System.out.println(i + " " + currentInterval + " ??? -" + i
-						+ " - " + timestamp + " , " + value);
+				//System.out.println(i + " " + currentInterval + " ??? -" + i
+				//		+ " - " + timestamp + " , " + value);
 				Point p = new Point();
 				p.timestamp = 0;
 				p.value = 0;

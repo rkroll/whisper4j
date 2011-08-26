@@ -17,17 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestCreate {
-	@Before
-	public void setup() {
-		File f = new File("./temp.wsp");
-		if (f.exists()) {
-			f.delete();
-		}
-	}
-
 	@Test
 	public void test_12h_2y() throws Exception {
-		
+		Util.delete("./temp.wsp");
 		// maxRetention: 63072000
 		// fileSize: 17548
 		// aggregationMethod: average
@@ -67,6 +59,29 @@ public class TestCreate {
 		Assert.assertEquals("offset", 28, info.offset);
 		Assert.assertEquals("size", 17520, info.size);
 		Assert.assertEquals("retention", 63072000, info.retention);
+	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+		String testFile = TestReadHeader.getWhistperFile(getClass(), "15m_8.wsp");
+
+		Util.delete(testFile);
+		Util.create(testFile, "15m:8");
+		
+		int oneMinuteFromNow = Whisper.time() + 60;
+		long value = 12345;
+		Util.update(testFile, oneMinuteFromNow+":"+value);
+
+		Whisper jisper = new Whisper();
+
+		TimeInfo timeInfo = jisper.fetch(testFile, oneMinuteFromNow - 120, oneMinuteFromNow + 120);
+		Assert.assertNotNull(timeInfo);
+		
+		for(Point p : timeInfo.points){
+			if(p != null && p.timestamp != 0){
+				System.out.println(p);
+			}
+		}
 	}
 
 }
